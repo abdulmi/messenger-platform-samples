@@ -1,6 +1,6 @@
 {
-    "appSecret": "",
-    "pageAccessToken": "",
-    "validationToken": "",
-    "serverURL": ""
+    "appSecret": "2296c6e7ea22ebbf91253ce5c111ca13",
+    "pageAccessToken": "EAABb6MPj9kQBAIRoAkfY6E0m4sYzAZCnC4ZCM3NNqgLGu0BGg91jALnq6CLIbfI4iqyzHYuAXKtKPlzJpBSRqkpPNbfflQYppgehw0HH8LJQJkhyzcyIvXrZBOi1SgHSGlODQ77GxIPKHBuzLhKBOs2LhCS8oB1B5pCLjiWiQZDZD",
+    "validationToken": "this_is_abdul",
+    "serverURL": "https://thawing-sierra-51262.herokuapp.com"
 }
