@@ -551,6 +551,7 @@ function analyzeMessage(message) {
       if(err) {
         console.log("UW API ERROR " + err);
       } else {
+        console.log(res);
         return String(res);
       }
     });
