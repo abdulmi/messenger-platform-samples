@@ -545,10 +545,14 @@ function analyzeMessage(message) {
   if(upperText.indexOf("EXAM") != -1) {
     //the user requested exam date
     var arrayMessage = upperText.split(" ");
-    var courseRequested = _.intersection(courses.allCourses)[0].match(/[a-zA-Z]+|[0-9]+/g);
+    var courseRequested = _.intersection(arrayMessage,courses.allCourses)[0].match(/[a-zA-Z]+|[0-9]+/g);
     console.log(courseRequested);
     uwclient.get('/courses/'+courseRequested[0]+'/'+courseRequested[1]+'/examschedule',{},function(err,res) {
-      return res;
+      if(err) {
+        console.log("UW API ERROR " + err);
+      } else {
+        return String(res);
+      }
     });
   } else {
     return message;
