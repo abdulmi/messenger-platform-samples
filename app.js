@@ -546,6 +546,7 @@ function analyzeMessage(message) {
     //the user requested exam date
     var arrayMessage = upperText.split(" ");
     var courseRequested = _.intersection(courses.allCourses)[0].match(/[a-zA-Z]+|[0-9]+/g);
+    console.log(courseRequested);
     uwclient.get('/courses/'+courseRequested[0]+'/'+courseRequested[1]+'/examschedule',{},function(err,res) {
       return res;
     });
