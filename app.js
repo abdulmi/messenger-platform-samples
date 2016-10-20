@@ -16,9 +16,16 @@ const
   crypto = require('crypto'),
   express = require('express'),
   https = require('https'),  
-  request = require('request');
+  request = require('request'),
+  uwaterlooApi = require('uwaterloo-api'),
+  _ = require('underscore'),
+  courses = require('./courses.js');
 
 var app = express();
+var uwclient = new uwaterlooApi({
+      API_KEY : '495cd8d2ca5f93e44f1171f5b58e59a0'
+});
+
 app.set('port', process.env.PORT || 5000);
 app.set('view engine', 'ejs');
 app.use(bodyParser.json({ verify: verifyRequestSignature }));
@@ -524,12 +531,26 @@ function sendTextMessage(recipientId, messageText) {
       id: recipientId
     },
     message: {
-      text: "get a girlfriend, BRO!",
+      text: analyzeMessage(messageText),
       metadata: "DEVELOPER_DEFINED_METADATA"
     }
   };
 
   callSendAPI(messageData);
+}
+
+function analyzeMessage(message) {
+  var upperText = message.toUpperCase;
+  if(upperText.indexOf("EXAM") != -1) {
+    //the user requested exam date
+    var arrayMessage = upperText.split(" ");
+    var courseRequested = _.intersection(courses.allCourses)[0].match(/[a-zA-Z]+|[0-9]+/g);
+    uwclient.get('/courses/'+courseRequested[0]+'/'+courseRequested[1]+'/examschedule',{},function(err,res) {
+      return res;
+    });
+  } else {
+    return message;
+  }
 }
 
 /*
