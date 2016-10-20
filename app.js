@@ -540,7 +540,7 @@ function sendTextMessage(recipientId, messageText) {
 }
 
 function analyzeMessage(message) {
-  var upperText = message.toUpperCase;
+  var upperText = message.toUpperCase();
   if(upperText.indexOf("EXAM") != -1) {
     //the user requested exam date
     var arrayMessage = upperText.split(" ");
