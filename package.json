@@ -20,6 +20,7 @@
     "ejs": "^2.4.2",
     "express": "^4.13.4",
     "request": "^2.72.0",
+    "underscore": "^1.8.3",
     "uwaterloo-api": "^1.0.2"
   },
   "engines": {
