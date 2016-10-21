@@ -533,11 +533,12 @@ function sendTextMessage(recipientId, messageText) {
         id: recipientId
       },
       message: {
-        text: res,
+        text: String(res),
         metadata: "DEVELOPER_DEFINED_METADATA"
       }
     };
     console.log("here is res" + res);
+    console.log(messageData);
     callSendAPI(messageData);
   });
  /* var messageData = {
@@ -570,7 +571,8 @@ function analyzeMessage(message,callback) {
       }
     });
   } else {
-    return message;
+      console.log("ECHO MESSAGE BACK");
+      callback(message);
   }
 }
 
