@@ -585,10 +585,9 @@ function analyzeMessage(message,callback) {
         callback(res);
       }
     });
-    else {
+  } else {
       console.log("ECHO MESSAGE BACK");
       callback(message);
-    }
   }
 }
 
