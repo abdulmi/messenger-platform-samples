@@ -587,7 +587,10 @@ function analyzeMessage(message,callback) {
         callback(res);
       }
     });
-  } else {
+  } else if(upperText.indexOf("OPEN") != -1) {
+
+  }
+    else {
       console.log("ECHO MESSAGE BACK");
       callback(message);
   }
