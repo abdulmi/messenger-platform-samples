@@ -526,20 +526,31 @@ function sendFileMessage(recipientId) {
  *
  */
 function sendTextMessage(recipientId, messageText) {
-  var messageData = {
+  analyzeMessage(messageText,function(res) { 
+    var messageData = {
+      recipient: {
+        id: recipientId
+      },
+      message: {
+        text: res,
+        metadata: "DEVELOPER_DEFINED_METADATA"
+      }
+    };
+  });
+ /* var messageData = {
     recipient: {
       id: recipientId
     },
     message: {
-      text: analyzeMessage(messageText),
+      text: analyzeMessage(messageText,function(res){text = res}),
       metadata: "DEVELOPER_DEFINED_METADATA"
     }
-  };
+  };*/
 
   callSendAPI(messageData);
 }
 
-function analyzeMessage(message) {
+function analyzeMessage(message,callback) {
   var messageStr = String(message);
   var upperText = messageStr.toUpperCase();
   if(upperText.indexOf("EXAM") != -1) {
@@ -552,7 +563,7 @@ function analyzeMessage(message) {
         console.log("UW API ERROR " + err);
       } else {
         console.log(res);
-        return String(res);
+        callback(res);
       }
     });
   } else {
