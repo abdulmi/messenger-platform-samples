@@ -527,6 +527,7 @@ function sendFileMessage(recipientId) {
  */
 function sendTextMessage(recipientId, messageText) {
   analyzeMessage(messageText,function(res) { 
+   
     var messageData = {
       recipient: {
         id: recipientId
@@ -536,6 +537,7 @@ function sendTextMessage(recipientId, messageText) {
         metadata: "DEVELOPER_DEFINED_METADATA"
       }
     };
+    console.log("here is res" + res);
     callSendAPI(messageData);
   });
  /* var messageData = {
