@@ -570,11 +570,13 @@ function analyzeMessage(message,callback) {
   if(upperText.indexOf("EXAM") != -1) {
     //the user requested exam date
     var arrayMessage = upperText.split(" ");
-    var courseRequested = _.intersection(arrayMessage,courses.allCourses)[0].match(/[a-zA-Z]+|[0-9]+/g);
+    var courseRequested = _.intersection(arrayMessage,courses.allCourses);
     //check if course is not valid
-    if(typeof courseRequested === 'undefined') {
+    if(courseRequested.length === 0) {
       callback("course invalid");
       return;
+    } else {
+      courseRequested = courseRequested[0].match(/[a-zA-Z]+|[0-9]+/g);
     }
     console.log(courseRequested);
     uwclient.get('/courses/'+courseRequested[0]+'/'+courseRequested[1]+'/examschedule',{},function(err,res) {
