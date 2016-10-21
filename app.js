@@ -527,9 +527,14 @@ function sendFileMessage(recipientId) {
  */
 function sendTextMessage(recipientId, messageText) {
   analyzeMessage(messageText,function(res) { 
-    var answer = "it will be on " + res["data"]["sections"][0]["day"] + " " +
+    var answer;
+    if(res !== messageText) {
+      answer = "it will be on " + res["data"]["sections"][0]["day"] + " " +
         res["data"]["sections"][0]["date"] + " From " + res["data"]["sections"][0]["start_time"]
         + " To " + res["data"]["sections"][0]["end_time"] + " at " + res["data"]["sections"][0]["location"];
+    } else {
+      answer = messageText;
+    }
     var messageData = {
       recipient: {
         id: recipientId
