@@ -536,6 +536,7 @@ function sendTextMessage(recipientId, messageText) {
         metadata: "DEVELOPER_DEFINED_METADATA"
       }
     };
+    callSendAPI(messageData);
   });
  /* var messageData = {
     recipient: {
@@ -545,9 +546,9 @@ function sendTextMessage(recipientId, messageText) {
       text: analyzeMessage(messageText,function(res){text = res}),
       metadata: "DEVELOPER_DEFINED_METADATA"
     }
-  };*/
+  };
 
-  callSendAPI(messageData);
+  callSendAPI(messageData); */
 }
 
 function analyzeMessage(message,callback) {
