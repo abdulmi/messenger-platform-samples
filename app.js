@@ -533,7 +533,10 @@ function sendTextMessage(recipientId, messageText) {
         id: recipientId
       },
       message: {
-        text: JSON.stringify(res),
+        var answer = "it will be on " + res["data"]["sections"][0]["day"] + " " +
+        res["data"]["sections"][0]["date"] + " From " + res["data"]["sections"][0]["start_time"]
+        + " To " + res["data"]["sections"][0]["end_time"] + " at " + res["data"]["sections"][0]["location"];
+        text: answer,
         metadata: "DEVELOPER_DEFINED_METADATA"
       }
     };
