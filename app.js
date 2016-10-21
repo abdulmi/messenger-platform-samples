@@ -533,7 +533,7 @@ function sendTextMessage(recipientId, messageText) {
         id: recipientId
       },
       message: {
-        text: String(res),
+        text: JSON.stringify(res),
         metadata: "DEVELOPER_DEFINED_METADATA"
       }
     };
