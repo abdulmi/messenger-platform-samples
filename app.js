@@ -528,7 +528,10 @@ function sendFileMessage(recipientId) {
 function sendTextMessage(recipientId, messageText) {
   analyzeMessage(messageText,function(res) { 
     var answer;
-    if(res !== messageText) {
+    if(res === "course invalid") {
+      answer = "The course couldn't be found or the dates aren't out yet";
+    }
+    else if(res !== messageText) {
       answer = "it will be on " + res["data"]["sections"][0]["day"] + " " +
         res["data"]["sections"][0]["date"] + " From " + res["data"]["sections"][0]["start_time"]
         + " To " + res["data"]["sections"][0]["end_time"] + " at " + res["data"]["sections"][0]["location"];
@@ -568,6 +571,11 @@ function analyzeMessage(message,callback) {
     //the user requested exam date
     var arrayMessage = upperText.split(" ");
     var courseRequested = _.intersection(arrayMessage,courses.allCourses)[0].match(/[a-zA-Z]+|[0-9]+/g);
+    //check if course is not valid
+    if(typeof courseRequested === 'undefined') {
+      callback("course invalid");
+      return;
+    }
     console.log(courseRequested);
     uwclient.get('/courses/'+courseRequested[0]+'/'+courseRequested[1]+'/examschedule',{},function(err,res) {
       if(err) {
@@ -577,9 +585,10 @@ function analyzeMessage(message,callback) {
         callback(res);
       }
     });
-  } else {
+    else {
       console.log("ECHO MESSAGE BACK");
       callback(message);
+    }
   }
 }
 
