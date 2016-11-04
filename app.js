@@ -664,11 +664,11 @@ function formatRestaurant(restaurant,location,hours,callback) {
       for(var i = 0;i < res.length;++i) {
         if(res[i]["is_open_now"] == true) {
           answer += res[i]["outlet_name"] + " [OPEN]\n";
-          answer += res[i]["opening_hours"][today]["opening_hour"] + " to " + res[i]["opening_hours"][today]["opening_hour"] + "\n";
+          answer += res[i]["opening_hours"][today]["opening_hour"] + " to " + res[i]["opening_hours"][today]["closing_hour"] + "\n";
         } else {
           answer += res[i]["outlet_name"] + " [CLOSE]\n";
           if(!res[i]["opening_hours"][today]["is_closed"]) {
-            answer += res[i]["opening_hours"][today]["opening_hour"] + " to " + res[i]["opening_hours"][today]["opening_hour"] + "\n";
+            answer += res[i]["opening_hours"][today]["opening_hour"] + " to " + res[i]["opening_hours"][today]["closing_hour"] + "\n";
           }
         }
       }
