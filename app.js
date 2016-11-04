@@ -644,7 +644,7 @@ function formatRestaurant(restaurant,location) {
   var answer = "";
   LookupRestaurant(restaurant,location,function(res) {
     for(var i = 0;i < res.length;++i) {
-      answer += res[i]["outlet_name"] + " is open = " res[i]["is_open_now"];
+      answer += res[i]["outlet_name"] + " is open = " + res[i]["is_open_now"];
     }
     return answer
   });
