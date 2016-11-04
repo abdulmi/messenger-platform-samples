@@ -657,8 +657,8 @@ function findEatingPlace(message) {
   for(var i = 0; i < len; i++) {
     var placeName = foodPlaces.foodPlacesarr[i]["name"].toUpperCase();
     if(message.toUpperCase().indexOf(placeName) !== -1) {
-      console.log("found place " + foodPlaces.foodPlacesarr[i]);
-      return foodPlaces.foodPlacesarr[i];
+      console.log("found place " + JSON.stringify(foodPlaces.foodPlacesarr[i]));
+      return JSON.stringify(foodPlaces.foodPlacesarr[i]);
     }
   }
   return null;
