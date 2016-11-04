@@ -630,7 +630,6 @@ function LookupRestaurant(restaurant,location,callback) {
       } else {
         for (var i = 0;i < res["data"].length;i+=1) {
           if(res["data"][i]["outlet_name"].indexOf(restaurant) !== -1) {
-            console.log(res["data"][i]);
             objectsMatch.push(res["data"][i]);
           } else {
             continue;
@@ -648,6 +647,7 @@ function formatRestaurant(restaurant,location) {
     for(var i = 0;i < res.length;++i) {
       answer += res[i]["outlet_name"] + " is open = " + res[i]["is_open_now"];
     }
+    console.log("answer is " + answer);
     return answer
   });
 }
