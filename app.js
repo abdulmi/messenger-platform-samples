@@ -598,17 +598,27 @@ function analyzeMessage(message,callback) {
       }
     });
   } else if(upperText.indexOf("OPEN") != -1) {
-    var foodObject = findEatingPlace(message);
-    if(foodObject != null) {
-      var foodLocation = findFoodBuilding(message,foodObject);
-      formatRestaurant(foodObject["name"],foodLocation,function(formattedAnswer) {
-        callback(formattedAnswer);
-      });
+    if(upperText.indexOf("HOURS") != -1) {
+      var foodObject = findEatingPlace(message);
+      if(foodObject != null) {
+        var foodLocation = findFoodBuilding(message,foodObject);
+        formatRestaurant(foodObject["name"],foodLocation,true,function(formattedAnswer) {
+          callback(formattedAnswer);
+        });
+      } else {
+        callback("food place invalid")
+      }
     } else {
-      callback("food place invalid")
-    }
-  }
-    else {
+      var foodObject = findEatingPlace(message);
+      if(foodObject != null) {
+        var foodLocation = findFoodBuilding(message,foodObject);
+        formatRestaurant(foodObject["name"],foodLocation,false,function(formattedAnswer) {
+          callback(formattedAnswer);
+        });
+      } else {
+        callback("food place invalid")
+      }
+    } else {
       console.log("ECHO MESSAGE BACK");
       callback(message);
   }
@@ -642,19 +652,41 @@ function LookupRestaurant(restaurant,location,callback) {
   });
 }
 
-function formatRestaurant(restaurant,location,callback) {
+function formatRestaurant(restaurant,location,hours,callback) {
   var answer = "";
-  LookupRestaurant(restaurant,location,function(res) {
-    for(var i = 0;i < res.length;++i) {
-      if(res[i]["is_open_now"] == true) {
-        answer += res[i]["outlet_name"] + " [OPEN]\n";
-      } else {
-        answer += res[i]["outlet_name"] + " [CLOSE]\n";
+  if(hours) {
+    var now = new Date();
+    console.log(now);
+    var days = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
+    var today = days[now.getDay()];
+    LookupRestaurant(restaurant,location,function(res) {
+      for(var i = 0;i < res.length;++i) {
+        if(res[i]["is_open_now"] == true) {
+          answer += res[i]["outlet_name"] + " [OPEN]\n";
+          answer += res[i]["opening_hours"][today]["opening_hours"] + " to " + res[i]["opening_hours"][today]["opening_hours"] + "\n";
+        } else {
+          answer += res[i]["outlet_name"] + " [CLOSE]\n";
+          if(!res[i]["opening_hours"][today]["is_closed"]) {
+            answer += res[i]["opening_hours"][today]["opening_hours"] + " to " + res[i]["opening_hours"][today]["opening_hours"] + "\n";
+          }
+        }
       }
-    }
-    console.log("answer is " + answer);
-    callback(answer);
-  });
+      console.log("answer is " + answer);
+      callback(answer);
+    });
+  } else {
+    LookupRestaurant(restaurant,location,function(res) {
+      for(var i = 0;i < res.length;++i) {
+        if(res[i]["is_open_now"] == true) {
+          answer += res[i]["outlet_name"] + " [OPEN]\n";
+        } else {
+          answer += res[i]["outlet_name"] + " [CLOSE]\n";
+        }
+      }
+      console.log("answer is " + answer);
+      callback(answer);
+    });
+  }
 }
 
 function findEatingPlace(message) {
