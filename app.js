@@ -651,7 +651,7 @@ function formatRestaurant(restaurant,location) {
 }
 
 function findEatingPlace(message) {
-  console.log("message in findEatingPlace " + message);
+  console.log("message in findEatingPlace nee" + message);
   console.log("foodplaces array " + foodPlaces.foodPlacesarr);
   var len = foodPlaces.foodPlacesarr.length;
   for(var i = 0; i < len; i++) {
