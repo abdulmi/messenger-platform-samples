@@ -597,10 +597,10 @@ function analyzeMessage(message,callback) {
       }
     });
   } else if(upperText.indexOf("OPEN") != -1) {
-    var foodName = findEatingPlace(message);
+    var foodObject = findEatingPlace(message);
     if(foodName != null) {
-      var foodLocation = findFoodBuilding(message,foodName);
-      var formattedAnswer = formatRestaurant(foodName,foodLocation);
+      var foodLocation = findFoodBuilding(message,foodObject);
+      var formattedAnswer = formatRestaurant(foodObject["name"],foodLocation);
       callback(formattedAnswer);
     } else {
       callback("food place invalid")
@@ -666,6 +666,9 @@ function findEatingPlace(message) {
 
 function findFoodBuilding(message, food) {
   var arr = food["places"];
+  console.log("food param is " + food);
+  console.log("name is "+food["name"]);
+  console.log("places are "+food["places"]);
   var len = arr.length;
   for(var i = 0; i < len; i++) {
     if(message.toUpperCase().indexOf(arr[i].toUpperCase()) !== - 1) {
