@@ -530,6 +530,8 @@ function sendTextMessage(recipientId, messageText) {
     var answer;
     if(res === "course invalid") {
       answer = "The course couldn't be found or the dates aren't out yet";
+    } else if(_.isEmpty(res["data"])) {
+      answer = "The course couldn't be found or the dates aren't out yet";
     }
     else if(res !== messageText) {
       answer = "it will be on " + res["data"]["sections"][0]["day"] + " " +
