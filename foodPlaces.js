@@ -27,4 +27,6 @@ var foodPlacesarr = [
  {"name": "Campus Bubble", "places": ["SLC"]},
  {"name": "Graduate House", "places": ["Graduate House"]},
  {"name": "Watson's Eatery", "places": ["STP"]},
- {"name": "Watson's Mug", "places": ["STP"]}]
+ {"name": "Watson's Mug", "places": ["STP"]}];
+
+ exports.foodPlacesarr = foodPlacesarr;
