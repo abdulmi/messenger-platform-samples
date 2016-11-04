@@ -597,16 +597,6 @@ function analyzeMessage(message,callback) {
         callback(res);
       }
     });
-  } else if(upperText.indexOf("OPEN") != -1) {
-    var foodObject = findEatingPlace(message);
-    if(foodObject != null) {
-      var foodLocation = findFoodBuilding(message,foodObject);
-      formatRestaurant(foodObject["name"],foodLocation,false,function(formattedAnswer) {
-        callback(formattedAnswer);
-      });
-    } else {
-      callback("food place invalid")
-    }
   } else if(upperText.indexOf("HOURS") != -1) {
       var foodObject = findEatingPlace(message);
       if(foodObject != null) {
@@ -617,6 +607,16 @@ function analyzeMessage(message,callback) {
       } else {
         callback("food place invalid")
       }
+  } else if(upperText.indexOf("OPEN") != -1) {
+    var foodObject = findEatingPlace(message);
+    if(foodObject != null) {
+      var foodLocation = findFoodBuilding(message,foodObject);
+      formatRestaurant(foodObject["name"],foodLocation,false,function(formattedAnswer) {
+        callback(formattedAnswer);
+      });
+    } else {
+      callback("food place invalid")
+    }
   } else {
       console.log("ECHO MESSAGE BACK");
       callback(message);
