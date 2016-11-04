@@ -651,6 +651,7 @@ function formatRestaurant(restaurant,location) {
 }
 
 function findEatingPlace(message) {
+  console.log(foodPlaces.foodPlaces);
   var len = foodPlaces.foodPlaces.length;
   for(var i = 0; i < len; i++) {
     var placeName = foodPlaces.foodPlaces[i]["name"].toUpperCase();
