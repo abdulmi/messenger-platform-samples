@@ -656,8 +656,10 @@ function formatRestaurant(restaurant,location,hours,callback) {
   if(hours) {
     var now = new Date();
     console.log(now);
+    console.log("TODAY NUM IS " + now.getDay);
     var days = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
     var today = days[now.getDay()];
+    console.log("TODAY IS " + today)
     LookupRestaurant(restaurant,location,function(res) {
       for(var i = 0;i < res.length;++i) {
         if(res[i]["is_open_now"] == true) {
