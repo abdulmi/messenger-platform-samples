@@ -652,13 +652,13 @@ function formatRestaurant(restaurant,location) {
 
 function findEatingPlace(message) {
   console.log("message in findEatingPlace " + message);
-  console.log("foodplaces array " + foodPlaces.foodPlaces);
-  var len = foodPlaces.foodPlaces.length;
+  console.log("foodplaces array " + foodPlaces.foodPlacesarr);
+  var len = foodPlaces.foodPlacesarr.length;
   for(var i = 0; i < len; i++) {
-    var placeName = foodPlaces.foodPlaces[i]["name"].toUpperCase();
+    var placeName = foodPlaces.foodPlacesarr[i]["name"].toUpperCase();
     if(message.toUpperCase().indexOf(placeName) !== -1) {
-      console.log("found place " + foodPlaces.foodPlaces[i]);
-      return foodPlaces.foodPlaces[i];
+      console.log("found place " + foodPlaces.foodPlacesarr[i]);
+      return foodPlaces.foodPlacesarr[i];
     }
   }
   return null;

@@ -1,4 +1,4 @@
-var foodPlaces = [
+var foodPlacesarr = [
  {"name": "Tim Hortons", "places": ["DC", "SLC", "ML","SCH","UWP"]},
  {"name": "Bon Appetit", "places": ["DC"]},
  {"name": "Browsers Cafe", "places": ["DP"]},
