@@ -621,6 +621,7 @@ function analyzeMessage(message,callback) {
     } else {
       console.log("ECHO MESSAGE BACK");
       callback(message);
+    }
   }
 }
 
