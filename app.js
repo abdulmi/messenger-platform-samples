@@ -19,7 +19,8 @@ const
   request = require('request'),
   uwaterlooApi = require('uwaterloo-api'),
   _ = require('underscore'),
-  courses = require('./courses.js');
+  courses = require('./courses.js'),
+  foodPlaces = require('./foodPlaces.js');
 
 var app = express();
 var uwclient = new uwaterlooApi({
@@ -530,6 +531,10 @@ function sendTextMessage(recipientId, messageText) {
     var answer;
     if(res === "course invalid") {
       answer = "The course couldn't be found or the dates aren't out yet";
+    } else if(res == "food place invalid") {
+      answer = "The food place couldn't be found";
+    } else if(res.indexOf("is open =") != -1) {
+      answer = res;
     } else if(res !== messageText) {
       // sometimes data is empty
         if(_.isEmpty(res["data"])) {
@@ -592,12 +597,80 @@ function analyzeMessage(message,callback) {
       }
     });
   } else if(upperText.indexOf("OPEN") != -1) {
-
+    var foodName = findEatingPlace(message);
+    if(foodName != null) {
+      var foodLocation = findFoodBuilding(message,foodName);
+      var formattedAnswer = formatRestaurant(foodName,foodLocation);
+      callback(formattedAnswer);
+    } else {
+      callback("food place invalid")
+    }
   }
     else {
       console.log("ECHO MESSAGE BACK");
       callback(message);
   }
+}
+
+function LookupRestaurant(restaurant,location,callback) {
+  var objectsMatch = [];
+  uwclient.get('/foodservices/locations',function(err,res) {
+    if(err) {
+      console.log("UW API ERROR " + err);
+    } else {
+      if(location != undefined) {
+        for (var i = 0;i < res["data"].length;i+=1) {
+          if((res["data"][i]["outlet_name"].indexOf(restaurant) !== -1) && res["data"][i]["building"] === location) {
+            objectsMatch.push(res["data"][i]);
+          } else {
+            continue;
+          }
+        }
+      } else {
+        for (var i = 0;i < res["data"].length;i+=1) {
+          if(res["data"][i]["outlet_name"].indexOf(restaurant) !== -1) {
+            objectsMatch.push(res["data"][i]);
+          } else {
+            continue;
+          }
+        }
+      }
+    }
+    callback(objectsMatch);
+  });
+}
+
+function formatRestaurant(restaurant,location) {
+  var answer = "";
+  LookupRestaurant(restaurant,location,function(res) {
+    for(var i = 0;i < res.length;++i) {
+      answer += res[i]["outlet_name"] + " is open = " res[i]["is_open_now"];
+    }
+    return answer
+  });
+}
+
+function findEatingPlace(message) {
+  var len = foodPlaces.foodPlaces.length;
+  for(var i = 0; i < len; i++) {
+    var placeName = foodPlaces.foodPlaces[i]["name"].toUpperCase();
+    if(message.toUpperCase().indexOf(placeName) !== -1) {
+      return foodPlaces.foodPlaces[i];
+    }
+  }
+  return null;
+}
+
+function findFoodBuilding(message, food) {
+  var arr = food["places"];
+  var len = arr.length;
+  for(var i = 0; i < len; i++) {
+    if(message.toUpperCase().indexOf(arr[i].toUpperCase()) !== - 1) {
+      return arr[i];
+      console.log(arr[i]);
+    }
+  }
+  return null;
 }
 
 /*
