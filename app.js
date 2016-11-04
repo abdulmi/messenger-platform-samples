@@ -618,10 +618,10 @@ function analyzeMessage(message,callback) {
       } else {
         callback("food place invalid")
       }
-    } else {
+    } 
+  } else {
       console.log("ECHO MESSAGE BACK");
       callback(message);
-    }
   }
 }
 
