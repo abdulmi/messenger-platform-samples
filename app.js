@@ -601,8 +601,9 @@ function analyzeMessage(message,callback) {
     var foodObject = findEatingPlace(message);
     if(foodObject != null) {
       var foodLocation = findFoodBuilding(message,foodObject);
-      var formattedAnswer = formatRestaurant(foodObject["name"],foodLocation);
-      callback(formattedAnswer);
+      formatRestaurant(foodObject["name"],foodLocation,function(formattedAnswer) {
+        callback(formattedAnswer);
+      });
     } else {
       callback("food place invalid")
     }
@@ -641,14 +642,14 @@ function LookupRestaurant(restaurant,location,callback) {
   });
 }
 
-function formatRestaurant(restaurant,location) {
+function formatRestaurant(restaurant,location,callback) {
   var answer = "";
   LookupRestaurant(restaurant,location,function(res) {
     for(var i = 0;i < res.length;++i) {
       answer += res[i]["outlet_name"] + " is open = " + res[i]["is_open_now"];
     }
     console.log("answer is " + answer);
-    return answer
+    callback(answer);
   });
 }
 
