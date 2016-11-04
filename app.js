@@ -629,7 +629,6 @@ function LookupRestaurant(restaurant,location,callback) {
         }
       } else {
         for (var i = 0;i < res["data"].length;i+=1) {
-          console.log(res["data"]);
           if(res["data"][i]["outlet_name"].indexOf(restaurant) !== -1) {
             console.log(res["data"][i]);
             objectsMatch.push(res["data"][i]);
