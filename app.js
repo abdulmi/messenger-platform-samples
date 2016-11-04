@@ -533,7 +533,7 @@ function sendTextMessage(recipientId, messageText) {
       answer = "The course couldn't be found or the dates aren't out yet";
     } else if(res == "food place invalid") {
       answer = "The food place couldn't be found";
-    } else if(res.indexOf("is open =") != -1) {
+    } else if(typeof res !== 'object') {
       answer = res;
     } else if(res !== messageText) {
       // sometimes data is empty
