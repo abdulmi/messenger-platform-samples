@@ -534,6 +534,7 @@ function sendTextMessage(recipientId, messageText) {
     } else if(res == "food place invalid") {
       answer = "The food place couldn't be found";
     } else if(typeof res !== 'object') {
+      console.log("food res " + res);
       answer = res;
     } else if(res !== messageText) {
       // sometimes data is empty
