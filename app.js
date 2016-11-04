@@ -646,7 +646,11 @@ function formatRestaurant(restaurant,location,callback) {
   var answer = "";
   LookupRestaurant(restaurant,location,function(res) {
     for(var i = 0;i < res.length;++i) {
-      answer += res[i]["outlet_name"] + " is open = " + res[i]["is_open_now"];
+      if(res[i]["is_open_now"] == true) {
+        answer += res[i]["outlet_name"] + " is open now\n";
+      } else {
+        answer += res[i]["outlet_name"] + " is closed now\n";
+      }
     }
     console.log("answer is " + answer);
     callback(answer);
