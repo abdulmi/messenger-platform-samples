@@ -598,7 +598,7 @@ function analyzeMessage(message,callback) {
     });
   } else if(upperText.indexOf("OPEN") != -1) {
     var foodObject = findEatingPlace(message);
-    if(foodName != null) {
+    if(foodObject != null) {
       var foodLocation = findFoodBuilding(message,foodObject);
       var formattedAnswer = formatRestaurant(foodObject["name"],foodLocation);
       callback(formattedAnswer);
