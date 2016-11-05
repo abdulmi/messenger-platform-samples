@@ -1,4 +1,4 @@
-var foodPlaces = require('foodPlaceObjects.js');
+var foodPlaces = require('./foodPlaceObjects.js');
 var uwaterlooApi = require('uwaterloo-api');
 
 var uwclient = new uwaterlooApi({
