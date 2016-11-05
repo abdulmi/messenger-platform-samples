@@ -1,3 +1,4 @@
+var foodPlaces = require('./foodPlaces.js'),
 module.exports = {
   LookupRestaurant:function (restaurant,location,callback) {
     var objectsMatch = [];
@@ -27,7 +28,7 @@ module.exports = {
     });
   },
 
-  formatRestaurant:function (restaurant,location,hours,callback) {
+  formatRestaurant:function (restaurant,location,hours,callback) { 
     var answer = "";
     if(hours) {
       var now = new Date();
