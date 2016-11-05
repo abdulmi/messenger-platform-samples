@@ -1,6 +1,6 @@
 var foodPlaces = require('../foodPlaces.js')
-module.exports = {
-  LookupRestaurant:function (restaurant,location,callback) {
+
+var LookupRestaurant = function (restaurant,location,callback) {
     var objectsMatch = [];
     uwclient.get('/foodservices/locations',function(err,res) {
       if(err) {
@@ -26,9 +26,9 @@ module.exports = {
       }
       callback(objectsMatch);
     });
-  },
+};
 
-  formatRestaurant:function (restaurant,location,hours,callback) { 
+var formatRestaurant = function (restaurant,location,hours,callback) { 
     var answer = "";
     if(hours) {
       var now = new Date();
@@ -65,9 +65,9 @@ module.exports = {
         callback(answer);
       });
     }
-  },
+};
 
-  findEatingPlace:function (message) {
+var findEatingPlace = function (message) {
     console.log("message in findEatingPlace nee" + message);
     console.log("foodplaces array " + foodPlaces.foodPlacesarr);
     var len = foodPlaces.foodPlacesarr.length;
@@ -79,9 +79,10 @@ module.exports = {
       }
     }
     return null;
-  },
+};
 
-  findFoodBuilding:function (message, food) {
+
+var findFoodBuilding = function (message, food) {
     var arr = food["places"];
     console.log("food param is " + food);
     console.log("name is "+food["name"]);
@@ -94,5 +95,13 @@ module.exports = {
       }
     }
     return null;
-  }
+};
+
+
+
+module.exports = {
+  LookupRestaurant: LookupRestaurant,
+  formatRestaurant: formatRestaurant,
+  findEatingPlace: findEatingPlace,
+  findFoodBuilding: findFoodBuilding
 }
