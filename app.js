@@ -569,7 +569,7 @@ function sendTextMessage(recipientId, messageText) {
   });
 }
 
-function formatExam(examObject,callback) {
+function formatExam(message,callback) {
   lookUpExam(message,function(res) {
     // sometimes data is empty
       if(_.isEmpty(res["data"])) {
