@@ -529,7 +529,7 @@ function sendFileMessage(recipientId) {
  */
 function sendTextMessage(recipientId, messageText) {
   analyzeMessage(messageText,function(res) { 
-    var answer;
+    // var answer;
     // if(res === "course invalid") {
     //   answer = "The course couldn't be found or the dates aren't out yet";
     // } else if(res == "food place invalid") {
@@ -549,17 +549,17 @@ function sendTextMessage(recipientId, messageText) {
     // } else {
     //   answer = messageText;
     // }
-    if(res != messageText) {
-      answer = res;
-    } else {
-      answer = messageText;
-    }
+    // if(res != messageText) {
+    //   answer = res;
+    // } else {
+    //   answer = messageText;
+    // }
     var messageData = {
       recipient: {
         id: recipientId
       },
       message: {
-        text: answer,
+        text: res,
         metadata: "DEVELOPER_DEFINED_METADATA"
       }
     };
