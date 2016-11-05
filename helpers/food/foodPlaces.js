@@ -1,4 +1,4 @@
-var foodPlaces = require('../foodPlaces.js');
+var foodPlaces = require('foodPlaceObjects.js');
 var uwaterlooApi = require('uwaterloo-api');
 
 var uwclient = new uwaterlooApi({
@@ -51,6 +51,8 @@ var formatRestaurant = function (restaurant,location,hours,callback) {
             answer += res[i]["outlet_name"] + " [CLOSE]\n";
             if(!res[i]["opening_hours"][today]["is_closed"]) {
               answer += res[i]["opening_hours"][today]["opening_hour"] + " to " + res[i]["opening_hours"][today]["closing_hour"] + "\n";
+            } else {
+              answer += "Not open today\n";
             }
           }
         }
