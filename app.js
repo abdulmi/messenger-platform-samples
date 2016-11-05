@@ -21,7 +21,7 @@ const
   _ = require('underscore'),
   courses = require('./courses.js'),
   foodPlaces = require('./foodPlaces.js'),
-  Food = require('./helpers/foodPlaces.js');
+  Food = require('helpers/foodPlaces.js');
 
 var app = express();
 var uwclient = new uwaterlooApi({
