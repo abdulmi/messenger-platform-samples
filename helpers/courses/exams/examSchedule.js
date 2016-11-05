@@ -20,7 +20,7 @@ var formatExam = function (message,callback) {
   });
 }
 
-var lookupExam = function (message, callback) {
+var lookUpExam = function (message, callback) {
    var messageUpperText = message.toUpperCase();
    var arrayMessage = messageUpperText.split(" ");
     var courseRequested = _.intersection(arrayMessage,courses.allCourses);
@@ -44,5 +44,5 @@ var lookupExam = function (message, callback) {
 
 module.exports = {
   formatExam:formatExam,
-  lookupExam:lookupExam
+  lookUpExam:lookUpExam
 }
