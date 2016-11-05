@@ -37,13 +37,11 @@ var formatRestaurant = function (restaurant,location,hours,callback) {
     var answer = "";
     if(hours) {
       var now = new Date();
-      console.log(now);
-      console.log("TODAY NUM IS " + now.getDay);
       var days = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
       var today = days[now.getDay()];
-      console.log("TODAY IS " + today)
       LookupRestaurant(restaurant,location,function(res) {
-        for(var i = 0;i < res.length;++i) {
+        console.log("YEEYE \n"+ res);
+        for(var i = 0;i < res.length; ++i) {
           if(res[i]["is_open_now"] == true) {
             answer += res[i]["outlet_name"] + " [OPEN]\n";
             answer += res[i]["opening_hours"][today]["opening_hour"] + " to " + res[i]["opening_hours"][today]["closing_hour"] + "\n";
@@ -56,7 +54,6 @@ var formatRestaurant = function (restaurant,location,hours,callback) {
             }
           }
         }
-        console.log("answer is " + answer);
         callback(answer);
       });
     } else {
