@@ -20,7 +20,8 @@ const
   uwaterlooApi = require('uwaterloo-api'),
   _ = require('underscore'),
   courses = require('./courses.js'),
-  foodPlaces = require('./foodPlaces.js');
+  foodPlaces = require('./foodPlaces.js'),
+  Food = require('./helpers/foodPlaces.js');
 
 var app = express();
 var uwclient = new uwaterlooApi({
@@ -598,20 +599,20 @@ function analyzeMessage(message,callback) {
       }
     });
   } else if(upperText.indexOf("HOURS") != -1) {
-      var foodObject = findEatingPlace(message);
+      var foodObject = Food.findEatingPlace(message);
       if(foodObject != null) {
-        var foodLocation = findFoodBuilding(message,foodObject);
-        formatRestaurant(foodObject["name"],foodLocation,true,function(formattedAnswer) {
+        var foodLocation = Food.findFoodBuilding(message,foodObject);
+        Food.formatRestaurant(foodObject["name"],foodLocation,true,function(formattedAnswer) {
           callback(formattedAnswer);
         });
       } else {
         callback("food place invalid")
       }
   } else if(upperText.indexOf("OPEN") != -1) {
-    var foodObject = findEatingPlace(message);
+    var foodObject = Food.findEatingPlace(message);
     if(foodObject != null) {
-      var foodLocation = findFoodBuilding(message,foodObject);
-      formatRestaurant(foodObject["name"],foodLocation,false,function(formattedAnswer) {
+      var foodLocation = Food.findFoodBuilding(message,foodObject);
+      Food.formatRestaurant(foodObject["name"],foodLocation,false,function(formattedAnswer) {
         callback(formattedAnswer);
       });
     } else {
