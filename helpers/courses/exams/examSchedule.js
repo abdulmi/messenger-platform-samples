@@ -1,10 +1,9 @@
 var courses = require('../coursesList.js');
-
 var uwaterlooApi = require('uwaterloo-api');
-
 var uwclient = new uwaterlooApi({
       API_KEY : '495cd8d2ca5f93e44f1171f5b58e59a0'
 });
+var _ = require('underscore');
 
 var formatExam = function (message,callback) {
   lookUpExam(message,function(res) {
