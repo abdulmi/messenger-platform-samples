@@ -52,7 +52,7 @@ var formatRestaurant = function (restaurant,location,hours,callback) {
             if(!res[i]["opening_hours"][today]["is_closed"]) {
               answer += res[i]["opening_hours"][today]["opening_hour"] + " to " + res[i]["opening_hours"][today]["closing_hour"] + "\n";
             } else {
-              answer += "Not open today\n";
+              answer += "Not open on " + today + "\n";
             }
           }
         }

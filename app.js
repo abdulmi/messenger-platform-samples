@@ -19,8 +19,8 @@ const
   request = require('request'),
   uwaterlooApi = require('uwaterloo-api'),
   _ = require('underscore'),
-  courses = require('./courses.js'),
-  Food = require('./helpers/food/foodPlaces.js');
+  Food = require('./helpers/food/foodPlaces.js'),
+  ExamSchedule = require('./helpers/courses/exams/examSchedule.js');
 
 var app = express();
 var uwclient = new uwaterlooApi({
@@ -528,31 +528,6 @@ function sendFileMessage(recipientId) {
  */
 function sendTextMessage(recipientId, messageText) {
   analyzeMessage(messageText,function(res) { 
-    // var answer;
-    // if(res === "course invalid") {
-    //   answer = "The course couldn't be found or the dates aren't out yet";
-    // } else if(res == "food place invalid") {
-    //   answer = "The food place couldn't be found";
-    // } else if(typeof res !== 'object') {
-    //   console.log("food res " + res);
-    //   answer = res;
-    // } else if(res !== messageText) {
-    //   // // sometimes data is empty
-    //   //   if(_.isEmpty(res["data"])) {
-    //   //     answer = "The course couldn't be found or the dates aren't out yet";
-    //   //   } else {
-    //   //     answer = "it will be on " + res["data"]["sections"][0]["day"] + " " +
-    //   //       res["data"]["sections"][0]["date"] + " From " + res["data"]["sections"][0]["start_time"]
-    //   //       + " To " + res["data"]["sections"][0]["end_time"] + " at " + res["data"]["sections"][0]["location"];
-    //   //   }
-    // } else {
-    //   answer = messageText;
-    // }
-    // if(res != messageText) {
-    //   answer = res;
-    // } else {
-    //   answer = messageText;
-    // }
     var messageData = {
       recipient: {
         id: recipientId
@@ -609,28 +584,9 @@ function analyzeMessage(message,callback) {
   var upperText = messageStr.toUpperCase();
   if(upperText.indexOf("EXAM") != -1) {
 
-    formatExam(message,function(res) {
+    ExamSchedule.formatExam(message,function(res) {
       callback(res);
     });
-    // //the user requested exam date
-    // var arrayMessage = upperText.split(" ");
-    // var courseRequested = _.intersection(arrayMessage,courses.allCourses);
-    // //check if course is not valid
-    // if(courseRequested.length === 0) {
-    //   callback("course invalid");
-    //   return;
-    // } else {
-    //   courseRequested = courseRequested[0].match(/[a-zA-Z]+|[0-9]+/g);
-    // }
-    // console.log(courseRequested);
-    // uwclient.get('/courses/'+courseRequested[0]+'/'+courseRequested[1]+'/examschedule',{},function(err,res) {
-    //   if(err) {
-    //     console.log("UW API ERROR " + err);
-    //   } else {
-    //     console.log(res);
-    //     callback(res);
-    //   }
-    // });
   } else if(upperText.indexOf("HOURS") != -1) {
       var foodObject = Food.findEatingPlace(message);
       if(foodObject != null) {
