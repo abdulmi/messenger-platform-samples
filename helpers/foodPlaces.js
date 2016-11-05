@@ -1,4 +1,4 @@
-var foodPlaces = require('./foodPlaces.js'),
+var foodPlaces = require('../foodPlaces.js'),
 module.exports = {
   LookupRestaurant:function (restaurant,location,callback) {
     var objectsMatch = [];
