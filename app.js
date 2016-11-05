@@ -575,7 +575,7 @@ function formatExam(message,callback) {
       if(_.isEmpty(res["data"])) {
         callback("course invalid");
       } else {
-        answer = "it will be on " + res["data"]["sections"][0]["day"] + " " +
+        var answer = "it will be on " + res["data"]["sections"][0]["day"] + " " +
           res["data"]["sections"][0]["date"] + " From " + res["data"]["sections"][0]["start_time"]
           + " To " + res["data"]["sections"][0]["end_time"] + " at " + res["data"]["sections"][0]["location"];
           callback(answer);
