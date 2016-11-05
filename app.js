@@ -530,22 +530,27 @@ function sendFileMessage(recipientId) {
 function sendTextMessage(recipientId, messageText) {
   analyzeMessage(messageText,function(res) { 
     var answer;
-    if(res === "course invalid") {
-      answer = "The course couldn't be found or the dates aren't out yet";
-    } else if(res == "food place invalid") {
-      answer = "The food place couldn't be found";
-    } else if(typeof res !== 'object') {
-      console.log("food res " + res);
+    // if(res === "course invalid") {
+    //   answer = "The course couldn't be found or the dates aren't out yet";
+    // } else if(res == "food place invalid") {
+    //   answer = "The food place couldn't be found";
+    // } else if(typeof res !== 'object') {
+    //   console.log("food res " + res);
+    //   answer = res;
+    // } else if(res !== messageText) {
+    //   // // sometimes data is empty
+    //   //   if(_.isEmpty(res["data"])) {
+    //   //     answer = "The course couldn't be found or the dates aren't out yet";
+    //   //   } else {
+    //   //     answer = "it will be on " + res["data"]["sections"][0]["day"] + " " +
+    //   //       res["data"]["sections"][0]["date"] + " From " + res["data"]["sections"][0]["start_time"]
+    //   //       + " To " + res["data"]["sections"][0]["end_time"] + " at " + res["data"]["sections"][0]["location"];
+    //   //   }
+    // } else {
+    //   answer = messageText;
+    // }
+    if(res != messageText) {
       answer = res;
-    } else if(res !== messageText) {
-      // sometimes data is empty
-        if(_.isEmpty(res["data"])) {
-          answer = "The course couldn't be found or the dates aren't out yet";
-        } else {
-          answer = "it will be on " + res["data"]["sections"][0]["day"] + " " +
-            res["data"]["sections"][0]["date"] + " From " + res["data"]["sections"][0]["start_time"]
-            + " To " + res["data"]["sections"][0]["end_time"] + " at " + res["data"]["sections"][0]["location"];
-        }
     } else {
       answer = messageText;
     }
@@ -562,25 +567,25 @@ function sendTextMessage(recipientId, messageText) {
     console.log(messageData);
     callSendAPI(messageData);
   });
- /* var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      text: analyzeMessage(messageText,function(res){text = res}),
-      metadata: "DEVELOPER_DEFINED_METADATA"
-    }
-  };
-
-  callSendAPI(messageData); */
 }
 
-function analyzeMessage(message,callback) {
-  var messageStr = String(message);
-  var upperText = messageStr.toUpperCase();
-  if(upperText.indexOf("EXAM") != -1) {
-    //the user requested exam date
-    var arrayMessage = upperText.split(" ");
+function formatExam(examObject,callback) {
+  lookUpExam(message,function(res) {
+    // sometimes data is empty
+      if(_.isEmpty(res["data"])) {
+        callback("course invalid");
+      } else {
+        answer = "it will be on " + res["data"]["sections"][0]["day"] + " " +
+          res["data"]["sections"][0]["date"] + " From " + res["data"]["sections"][0]["start_time"]
+          + " To " + res["data"]["sections"][0]["end_time"] + " at " + res["data"]["sections"][0]["location"];
+          callback(answer);
+      }
+  });
+}
+
+function lookUpExam(message, callback) {
+   var messageUpperText = message.toUpperCase();
+   var arrayMessage = messageUpperText.split(" ");
     var courseRequested = _.intersection(arrayMessage,courses.allCourses);
     //check if course is not valid
     if(courseRequested.length === 0) {
@@ -598,6 +603,35 @@ function analyzeMessage(message,callback) {
         callback(res);
       }
     });
+}
+
+function analyzeMessage(message,callback) {
+  var messageStr = String(message);
+  var upperText = messageStr.toUpperCase();
+  if(upperText.indexOf("EXAM") != -1) {
+
+    formatExam(message,function(res) {
+      callback(res);
+    });
+    // //the user requested exam date
+    // var arrayMessage = upperText.split(" ");
+    // var courseRequested = _.intersection(arrayMessage,courses.allCourses);
+    // //check if course is not valid
+    // if(courseRequested.length === 0) {
+    //   callback("course invalid");
+    //   return;
+    // } else {
+    //   courseRequested = courseRequested[0].match(/[a-zA-Z]+|[0-9]+/g);
+    // }
+    // console.log(courseRequested);
+    // uwclient.get('/courses/'+courseRequested[0]+'/'+courseRequested[1]+'/examschedule',{},function(err,res) {
+    //   if(err) {
+    //     console.log("UW API ERROR " + err);
+    //   } else {
+    //     console.log(res);
+    //     callback(res);
+    //   }
+    // });
   } else if(upperText.indexOf("HOURS") != -1) {
       var foodObject = Food.findEatingPlace(message);
       if(foodObject != null) {
@@ -622,102 +656,6 @@ function analyzeMessage(message,callback) {
       console.log("ECHO MESSAGE BACK");
       callback(message);
   }
-}
-
-function LookupRestaurant(restaurant,location,callback) {
-  var objectsMatch = [];
-  uwclient.get('/foodservices/locations',function(err,res) {
-    if(err) {
-      console.log("UW API ERROR " + err);
-    } else {
-      if(location != undefined) {
-        for (var i = 0;i < res["data"].length;i+=1) {
-          if((res["data"][i]["outlet_name"].indexOf(restaurant) !== -1) && res["data"][i]["building"] === location) {
-            objectsMatch.push(res["data"][i]);
-          } else {
-            continue;
-          }
-        }
-      } else {
-        for (var i = 0;i < res["data"].length;i+=1) {
-          if(res["data"][i]["outlet_name"].indexOf(restaurant) !== -1) {
-            objectsMatch.push(res["data"][i]);
-          } else {
-            continue;
-          }
-        }
-      }
-    }
-    callback(objectsMatch);
-  });
-}
-
-function formatRestaurant(restaurant,location,hours,callback) {
-  var answer = "";
-  if(hours) {
-    var now = new Date();
-    console.log(now);
-    console.log("TODAY NUM IS " + now.getDay);
-    var days = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
-    var today = days[now.getDay()];
-    console.log("TODAY IS " + today)
-    LookupRestaurant(restaurant,location,function(res) {
-      for(var i = 0;i < res.length;++i) {
-        if(res[i]["is_open_now"] == true) {
-          answer += res[i]["outlet_name"] + " [OPEN]\n";
-          answer += res[i]["opening_hours"][today]["opening_hour"] + " to " + res[i]["opening_hours"][today]["closing_hour"] + "\n";
-        } else {
-          answer += res[i]["outlet_name"] + " [CLOSE]\n";
-          if(!res[i]["opening_hours"][today]["is_closed"]) {
-            answer += res[i]["opening_hours"][today]["opening_hour"] + " to " + res[i]["opening_hours"][today]["closing_hour"] + "\n";
-          }
-        }
-      }
-      console.log("answer is " + answer);
-      callback(answer);
-    });
-  } else {
-    LookupRestaurant(restaurant,location,function(res) {
-      for(var i = 0;i < res.length;++i) {
-        if(res[i]["is_open_now"] == true) {
-          answer += res[i]["outlet_name"] + " [OPEN]\n";
-        } else {
-          answer += res[i]["outlet_name"] + " [CLOSE]\n";
-        }
-      }
-      console.log("answer is " + answer);
-      callback(answer);
-    });
-  }
-}
-
-function findEatingPlace(message) {
-  console.log("message in findEatingPlace nee" + message);
-  console.log("foodplaces array " + foodPlaces.foodPlacesarr);
-  var len = foodPlaces.foodPlacesarr.length;
-  for(var i = 0; i < len; i++) {
-    var placeName = foodPlaces.foodPlacesarr[i]["name"].toUpperCase();
-    if(message.toUpperCase().indexOf(placeName) !== -1) {
-      console.log("found place " + JSON.stringify(foodPlaces.foodPlacesarr[i]));
-      return foodPlaces.foodPlacesarr[i];
-    }
-  }
-  return null;
-}
-
-function findFoodBuilding(message, food) {
-  var arr = food["places"];
-  console.log("food param is " + food);
-  console.log("name is "+food["name"]);
-  console.log("places are "+food["places"]);
-  var len = arr.length;
-  for(var i = 0; i < len; i++) {
-    if(message.toUpperCase().indexOf(arr[i].toUpperCase()) !== - 1) {
-      return arr[i];
-      console.log(arr[i]);
-    }
-  }
-  return null;
 }
 
 /*
