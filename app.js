@@ -17,15 +17,10 @@ const
   express = require('express'),
   https = require('https'),  
   request = require('request'),
-  uwaterlooApi = require('uwaterloo-api'),
-  _ = require('underscore'),
   Food = require('./helpers/food/foodPlaces.js'),
   ExamSchedule = require('./helpers/courses/exams/examSchedule.js');
 
 var app = express();
-var uwclient = new uwaterlooApi({
-      API_KEY : '495cd8d2ca5f93e44f1171f5b58e59a0'
-});
 
 app.set('port', process.env.PORT || 5000);
 app.set('view engine', 'ejs');
