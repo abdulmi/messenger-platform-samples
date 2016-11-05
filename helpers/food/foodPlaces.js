@@ -40,7 +40,6 @@ var formatRestaurant = function (restaurant,location,hours,callback) {
       var days = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
       var today = days[now.getDay()];
       LookupRestaurant(restaurant,location,function(res) {
-        console.log("YEEYE \n"+ res);
         for(var i = 0;i < res.length; ++i) {
           if(res[i]["is_open_now"] == true) {
             answer += res[i]["outlet_name"] + " [OPEN]\n";
@@ -50,7 +49,7 @@ var formatRestaurant = function (restaurant,location,hours,callback) {
             if(!res[i]["opening_hours"][today]["is_closed"]) {
               answer += res[i]["opening_hours"][today]["opening_hour"] + " to " + res[i]["opening_hours"][today]["closing_hour"] + "\n";
             } else {
-              answer += "Not open on " + today + "\n";
+              answer += "Closed today\n";
             }
           }
         }
