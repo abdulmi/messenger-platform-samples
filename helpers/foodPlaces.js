@@ -1,5 +1,9 @@
 var foodPlaces = require('../foodPlaces.js')
 
+var uwclient = new uwaterlooApi({
+      API_KEY : '495cd8d2ca5f93e44f1171f5b58e59a0'
+});
+
 var LookupRestaurant = function (restaurant,location,callback) {
     var objectsMatch = [];
     uwclient.get('/foodservices/locations',function(err,res) {
