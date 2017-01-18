@@ -11,7 +11,7 @@ var formatSection = function (message,callback) {
     // sometimes data is empty
       var days = ['sunday','M','T','W','Th','F','saturday'];
       var currentDay = moment().tz("America/New_York").day()
-      var currentHour = moment().tz("America/New_York").hours()
+      var currentHour = moment().tz("America/New_York").hours()-15;
       var currentMinute = moment().tz("America/New_York").minutes()
       var today = days[currentDay]
       if(_.isEmpty(res["data"])) {
