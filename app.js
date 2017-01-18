@@ -19,7 +19,7 @@ const
   request = require('request'),
   Food = require('./helpers/food/foodPlaces.js'),
   ExamSchedule = require('./helpers/courses/exams/examSchedule.js'),
-  NextSection = require('./helpers/courses/exams/nextSection.js');
+  NextSection = require('./helpers/courses/sections/nextSection.js');
 
 var app = express();
 
