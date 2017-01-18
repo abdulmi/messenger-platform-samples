@@ -20,6 +20,8 @@ var formatSection = function (message,callback) {
         var answer = ""
         for (var course in res["data"]) {
           console.log("fuck")
+          console.log(res);
+          console.log(res["data"])
           console.log(course)
           if(course["section"].indexOf("LEC") != -1) {
               dataObj = course["classes"][0]
