@@ -34,7 +34,7 @@ var formatSection = function (message,callback) {
               if((day.indexOf(today) != -1) && (currentHour <= startTimeHour)) {
                   if((currentHour == startTimeHour && currentMinute <= startTimeMinute) ||
                       (currentHour < startTimeHour)) {
-                  answer += startTimeHour.toString() +":"+startTimeMinute.toString()+ " to "+endTimeHour.toString()+":"+endTimeMinute.toString()+ " with " + dataObj["instructors"] + " at " + dataObj["location"]["building"]+dataObj["location"]["room"] + "\n"
+                  answer += dataObj["date"]["start_time"] + " to "+dataObj["date"]["end_time"]+ " with " + dataObj["instructors"] + " at " + dataObj["location"]["building"]+" "+dataObj["location"]["room"] + "\n"
                 }
           }
         }
