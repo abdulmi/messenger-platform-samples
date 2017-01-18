@@ -43,6 +43,7 @@ var formatSection = function (message,callback) {
         }
         callback(answer);
       }
+    }
   });
 }
 
