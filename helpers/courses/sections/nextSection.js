@@ -12,13 +12,10 @@ var formatSection = function (message,callback) {
         callback("course invalid");
       } else {
         var answer = ""
-        /*for (var course in res) {
+        for (var course in res) {
 
-        }*/
-        // callback(answer);
-        var d = new Date()
-        d.setTime(d.getTime() - d.getTimezoneOffset() * 60 * 1000)
-        callback(d)
+        }
+        callback(answer);
       }
   });
 }
