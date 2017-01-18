@@ -10,7 +10,7 @@ var formatSection = function (message,callback) {
   lookUpSection(message,function(res) {
     // sometimes data is empty
       var days = ['sunday','M','T','W','Th','F','saturday'];
-      var currentDay = moment().tz("America/New_York").day()-1;
+      var currentDay = moment().tz("America/New_York").day()-1
       var currentHour = moment().tz("America/New_York").hours()-15;
       var currentMinute = moment().tz("America/New_York").minutes()
       var today = days[currentDay]
@@ -31,19 +31,15 @@ var formatSection = function (message,callback) {
               startTimeMinute = parseInt(dataObj["date"]["start_time"].split(":")[1])
               endTimeHour = parseInt(dataObj["date"]["end_time"].split(":")[0])
               endTimeMinute = parseInt(dataObj["date"]["end_time"].split(":")[1])
-              if(day.indexOf(today) != -1 &&
-                currentHour <= startTimeHour) {
-                  if((currentHour === startTimeHour && currentMinute <= startTimeMinute) ||
-                      currentHour < startTimeHour) {
-                  answer += startTimeHour.toString() +":"+startTimeMinute.toString()+
-                  " to "+endTimeHour.toString()+":"+endTimeMinute.toString()+ " with " +
-                  dataObj["instructors"] + " at " + dataObj["location"]["building"]+
-                  dataObj["location"]["room"] + "\n"
+              if((day.indexOf(today) != -1) && (currentHour <= startTimeHour)) {
+                  if((currentHour == startTimeHour && currentMinute <= startTimeMinute) ||
+                      (currentHour < startTimeHour)) {
+                  answer += startTimeHour.toString() +":"+startTimeMinute.toString()+ " to "+endTimeHour.toString()+":"+endTimeMinute.toString()+ " with " + dataObj["instructors"] + " at " + dataObj["location"]["building"]+dataObj["location"]["room"] + "\n"
                 }
           }
         }
         if(answer === "") {
-          answer += "No timings offered for the rest of the day"
+          answer += "No timings offered for the rest of the day\n"
         }
         callback(answer);
       }
