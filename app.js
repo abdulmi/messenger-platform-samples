@@ -542,7 +542,7 @@ function sendTextMessage(recipientId, messageText) {
 function analyzeMessage(message,callback) {
   var d = new Date()
   d.setTime(d.getTime() - d.getTimezoneOffset() * 60 * 1000)
-  callback(d)
+  callback(d.getTimezoneOffset() + " " + d)
 //   var messageStr = String(message);
 //   var upperText = messageStr.toUpperCase();
 //   if(upperText.indexOf("EXAM") != -1) {
