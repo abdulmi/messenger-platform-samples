@@ -18,10 +18,11 @@ var formatSection = function (message,callback) {
         callback("course invalid");
       } else {
         var answer = ""
-        for (var course in res["data"]) {
+        var len = res["data"].length;
+        for(var i = 0; i<len; i++) {
+          var course = res["data"][i];
           console.log("fuck")
-          console.log(res);
-          console.log(res["data"])
+          console.log(len);
           console.log(course)
           if(course["section"].indexOf("LEC") != -1) {
               dataObj = course["classes"][0]
