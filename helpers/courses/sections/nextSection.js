@@ -10,7 +10,7 @@ var formatSection = function (message,callback) {
   lookUpSection(message,function(res) {
     // sometimes data is empty
       var days = ['sunday','M','T','W','Th','F','saturday'];
-      var currentDay = moment().tz("America/New_York").day()-1
+      var currentDay = moment().tz("America/New_York").day()-1;
       var currentHour = moment().tz("America/New_York").hours()-15;
       var currentMinute = moment().tz("America/New_York").minutes()
       var today = days[currentDay]
