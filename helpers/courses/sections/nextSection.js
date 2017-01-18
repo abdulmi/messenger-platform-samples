@@ -18,7 +18,7 @@ var formatSection = function (message,callback) {
         callback("course invalid");
       } else {
         var answer = ""
-        for (var course in res) {
+        for (var course in res["data"]) {
           console.log("fuck")
           console.log(course)
           if(course["section"].indexOf("LEC") != -1) {
