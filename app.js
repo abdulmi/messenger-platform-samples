@@ -17,7 +17,6 @@ const
   express = require('express'),
   https = require('https'),
   request = require('request'),
-  moment = require('moment-timezone'),
   Food = require('./helpers/food/foodPlaces.js'),
   ExamSchedule = require('./helpers/courses/exams/examSchedule.js'),
   NextSection = require('./helpers/courses/sections/nextSection.js');
@@ -541,48 +540,43 @@ function sendTextMessage(recipientId, messageText) {
 }
 
 function analyzeMessage(message,callback) {
-  // var d = new Date()
-  // d.setTime(d.getTime() - d.getTimezoneOffset() * 60 * 1000)
-  var d = moment().tz("America/New_York").hours()
-  callback(d)
+  var messageStr = String(message);
+  var upperText = messageStr.toUpperCase();
+  if(upperText.indexOf("EXAM") != -1) {
 
-//   var messageStr = String(message);
-//   var upperText = messageStr.toUpperCase();
-//   if(upperText.indexOf("EXAM") != -1) {
-//
-//     ExamSchedule.formatExam(message,function(res) {
-//       callback(res);
-//     });
-//   }
-//   else if(upperText.indexOf("NEXT") != -1) {
-//     NextSection.formatSection(message,function(res) {
-//       callback(res);
-//     });
-//   }
-//   else if(upperText.indexOf("HOURS") != -1) {
-//       var foodObject = Food.findEatingPlace(message);
-//       if(foodObject != null) {
-//         var foodLocation = Food.findFoodBuilding(message,foodObject);
-//         Food.formatRestaurant(foodObject["name"],foodLocation,true,function(formattedAnswer) {
-//           callback(formattedAnswer);
-//         });
-//       } else {
-//         callback("food place invalid")
-//       }
-//   } else if(upperText.indexOf("OPEN") != -1) {
-//     var foodObject = Food.findEatingPlace(message);
-//     if(foodObject != null) {
-//       var foodLocation = Food.findFoodBuilding(message,foodObject);
-//       Food.formatRestaurant(foodObject["name"],foodLocation,false,function(formattedAnswer) {
-//         callback(formattedAnswer);
-//       });
-//     } else {
-//       callback("food place invalid")
-//     }
-//   } else {
-//       console.log("ECHO MESSAGE BACK");
-//       callback(message);
-//   }
+    ExamSchedule.formatExam(message,function(res) {
+      callback(res);
+    });
+  }
+  else if(upperText.indexOf("NEXT") != -1) {
+    NextSection.formatSection(message,function(res) {
+      callback(res);
+    });
+  }
+  else if(upperText.indexOf("HOURS") != -1) {
+      var foodObject = Food.findEatingPlace(message);
+      if(foodObject != null) {
+        var foodLocation = Food.findFoodBuilding(message,foodObject);
+        Food.formatRestaurant(foodObject["name"],foodLocation,true,function(formattedAnswer) {
+          callback(formattedAnswer);
+        });
+      } else {
+        callback("food place invalid")
+      }
+  } else if(upperText.indexOf("OPEN") != -1) {
+    var foodObject = Food.findEatingPlace(message);
+    if(foodObject != null) {
+      var foodLocation = Food.findFoodBuilding(message,foodObject);
+      Food.formatRestaurant(foodObject["name"],foodLocation,false,function(formattedAnswer) {
+        callback(formattedAnswer);
+      });
+    } else {
+      callback("food place invalid")
+    }
+  } else {
+      console.log("ECHO MESSAGE BACK");
+      callback(message);
+  }
 }
 
 /*

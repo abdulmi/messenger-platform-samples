@@ -1,5 +1,6 @@
 var courses = require('../coursesList.js');
 var uwaterlooApi = require('uwaterloo-api');
+var moment = require('moment-timezone');
 var uwclient = new uwaterlooApi({
       API_KEY : '495cd8d2ca5f93e44f1171f5b58e59a0'
 });
@@ -8,12 +9,35 @@ var _ = require('underscore');
 var formatSection = function (message,callback) {
   lookUpSection(message,function(res) {
     // sometimes data is empty
+      var days = ['sunday','M','T','W','Th','F','saturday'];
+      var currentDay = moment().tz("America/New_York").day()
+      var currentHour = moment().tz("America/New_York").hours()
+      var currentMinute = moment().tz("America/New_York").minutes()
+      var today = days[currentDay]
       if(_.isEmpty(res["data"])) {
         callback("course invalid");
       } else {
         var answer = ""
         for (var course in res) {
-
+          if(course["section"].indexOf("LEC") != -1) {
+              dataObj = course["classes"][0]
+              day = dataObj["date"]["weekdays"]
+              startTimeHour = parseInt(dataObj["date"]["start_time"].split(":")[0])
+              startTimeMinute = parseInt(dataObj["date"]["start_time"].split(":")[1])
+              endTimeHour = parseInt(dataObj["date"]["end_time"].split(":")[0])
+              endTimeMinute = parseInt(dataObj["date"]["end_time"].split(":")[1])
+              if(day.indexOf(today) != -1 &&
+                currentHour <= startTimeHour &&
+                currentMinute <= startTimeMinute) {
+                  answer += startTimeHour.toString() +":"+startTimeMinute.toString()+
+                  " to "+endTimeHour.toString()+":"+endTimeMinute.toString()+ "with " +
+                  dataObj["instructors"] + " at " + dataObj["location"]["building"]+
+                  dataObj["location"]["room"]
+                }
+          }
+        }
+        if(answer === "") {
+          answer += "No timings offered for the rest of the day"
         }
         callback(answer);
       }
