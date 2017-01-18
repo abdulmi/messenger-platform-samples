@@ -19,6 +19,7 @@ var formatSection = function (message,callback) {
       } else {
         var answer = ""
         for (var course in res) {
+          console.log("fuck")
           console.log(course)
           if(course["section"].indexOf("LEC") != -1) {
               dataObj = course["classes"][0]
