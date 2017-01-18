@@ -10,8 +10,8 @@ var formatSection = function (message,callback) {
   lookUpSection(message,function(res) {
     // sometimes data is empty
       var days = ['sunday','M','T','W','Th','F','saturday'];
-      var currentDay = moment().tz("America/New_York").day()-1
-      var currentHour = moment().tz("America/New_York").hours()-15;
+      var currentDay = moment().tz("America/New_York").day()
+      var currentHour = moment().tz("America/New_York").hours()
       var currentMinute = moment().tz("America/New_York").minutes()
       var today = days[currentDay]
       if(_.isEmpty(res["data"])) {
@@ -35,17 +35,17 @@ var formatSection = function (message,callback) {
                   if((currentHour == startTimeHour && currentMinute <= startTimeMinute) ||
                       (currentHour < startTimeHour)) {
                   answer += dataObj["date"]["start_time"] + " to "+dataObj["date"]["end_time"]+ " with " + dataObj["instructors"] + " at " + dataObj["location"]["building"]+" "+dataObj["location"]["room"] + "\n"
-                }
-          }
+                  }
+              }
         }
-        if(answer === "") {
-          answer += "No timings offered for the rest of the day\n"
-        }
-        callback(answer);
       }
-    }
-  });
-}
+      if(answer === "") {
+        answer += "No timings offered for the rest of the day\n"
+      }
+      callback(answer);
+      }
+    });
+  }
 
 var lookUpSection = function (message, callback) {
    var messageUpperText = message.toUpperCase();
