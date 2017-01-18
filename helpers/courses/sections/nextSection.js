@@ -24,7 +24,7 @@ var formatSection = function (message,callback) {
           console.log("fuck")
           console.log(len);
           console.log(course)
-          if(course["section"].indexOf("LEC") != -1) {
+          if(course["section"].indexOf("LEC") != -1 && course["campus"].indexOf("ONLINE") === -1) {
               dataObj = course["classes"][0]
               day = dataObj["date"]["weekdays"]
               startTimeHour = parseInt(dataObj["date"]["start_time"].split(":")[0])
