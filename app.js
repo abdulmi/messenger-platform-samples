@@ -581,9 +581,10 @@ function analyzeMessage(message,callback) {
 Food Place Current Status: 'open', [NAME]
 
       var response =  "Keywords for Asking:\n" +
-                      "Food Place Hours: 'hours', [NAME]\n" +
-                      "Exam Times: 'exam', [COURSECODE(no spaces)]\n" +
-                      "Class Times: 'next', [COURSECODE](no spaces)\n" +
+                      "Food Place Hours: \'hours\', [NAME]\n" +
+                      "Food Place Open?: \'open\', [NAME]\n" +
+                      "Exam Times: \'exam\', [COURSECODE(no spaces)]\n" +
+                      "Class Times: \'next\', [COURSECODE](no spaces)\n" +
                       "send us feedback @aalmetwa@uwaterloo.ca\n"
       callback(response)
   }
