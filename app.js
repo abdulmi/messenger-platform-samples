@@ -573,9 +573,15 @@ function analyzeMessage(message,callback) {
     } else {
       callback("food place invalid")
     }
-  } else {
-      console.log("ECHO MESSAGE BACK");
-      callback(message);
+  } else if(messageStr.toUpperCase() === "HELP") {
+      var response = "for food places, type either open or hours + food place\n" +
+                      "for exam time, type exam + course name(no spaces)\n" +
+                      "for class time, type next + course name(no spaces)\n"
+      callback(response)
+  }
+  else {
+      console.log("invalid command");
+      callback("sorry, invalid command");
   }
 }
 
