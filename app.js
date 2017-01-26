@@ -575,9 +575,15 @@ function analyzeMessage(message,callback) {
       callback("food place invalid")
     }
   } else if(messageStr.toUpperCase() === "HELP") {
-      var response = "for food places, type either open or hours + food place\n" +
-                      "for exam time, type exam + course name(no spaces)\n" +
-                      "for class time, type next + course name(no spaces)\n" +
+
+
+
+Food Place Current Status: 'open', [NAME]
+
+      var response =  "Keywords for Asking:\n" +
+                      "Food Place Hours: 'hours', [NAME]\n" +
+                      "Exam Times: 'exam', [COURSECODE(no spaces)]\n" +
+                      "Class Times: 'next', [COURSECODE](no spaces)\n" +
                       "send us feedback @aalmetwa@uwaterloo.ca\n"
       callback(response)
   }
