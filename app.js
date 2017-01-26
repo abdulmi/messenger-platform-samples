@@ -314,7 +314,7 @@ function receivedMessage(event) {
       default:
         sendTextMessage(senderID, messageText);
     }
-  } 
+  }
   // else if (messageAttachments) {
   //   sendTextMessage(senderID, "Message with attachment received");
   // }
@@ -577,7 +577,8 @@ function analyzeMessage(message,callback) {
   } else if(messageStr.toUpperCase() === "HELP") {
       var response = "for food places, type either open or hours + food place\n" +
                       "for exam time, type exam + course name(no spaces)\n" +
-                      "for class time, type next + course name(no spaces)\n"
+                      "for class time, type next + course name(no spaces)\n" +
+                      "send us feedback @aalmetwa@uwaterloo.ca\n"
       callback(response)
   }
   else {
