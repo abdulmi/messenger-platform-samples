@@ -576,10 +576,6 @@ function analyzeMessage(message,callback) {
     }
   } else if(messageStr.toUpperCase() === "HELP") {
 
-
-
-Food Place Current Status: 'open', [NAME]
-
       var response =  "Keywords for Asking:\n" +
                       "Food Place Hours: hours, [NAME]\n" +
                       "Food Place Open?: open, [NAME]\n" +
