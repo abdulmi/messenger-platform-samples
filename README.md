@@ -1,6 +1,7 @@
 # UW CHAT BOT 
 ## SETUP: 
 - change the config in `default.json` file or set you environment variables using facebook dashboard  
+- setup your webhook on facebook's dashboard 
 - run ` npm start `   
 ## TESTING:  
 - download ngrok  
