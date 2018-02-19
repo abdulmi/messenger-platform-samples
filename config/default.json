@@ -1,5 +1,5 @@
 {
-    "appSecret": "2296c6e7ea22ebbf91253ce5c111ca13",
-    "pageAccessToken": "EAABb6MPj9kQBACSfrIIYql7NLjvD6pJwaKJJBfypPyuXvjxAhyFq4HVCSZAGK3Aj1CBSMNX3FMxWAfWYA3o4vJDydiOQC18sYW8hOyFXLsDZBsZAD64MT4gEGSiIbk0DZCDlK9ZBFqwHd2ZBgjSblcg4J6HyZCf9rtvNiS0txqJcQZDZD",
-    "validationToken": "this_is_abdul"
+    "appSecret": "PUT_appSecret_HERE_OR_AS_ENV",
+    "pageAccessToken": "PUT_pageAccessToken_HERE_OR_AS_ENV",
+    "validationToken": "PUT_validationToken_HERE_OR_AS_ENV"
 }

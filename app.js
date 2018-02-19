@@ -216,7 +216,6 @@ function analyzeMessage(message,callback) {
   var messageStr = String(message);
   var upperText = messageStr.toUpperCase();
   if(upperText.indexOf("EXAM") != -1) {
-
     ExamSchedule.formatExam(message,function(res) {
       callback(res);
     });
@@ -227,15 +226,15 @@ function analyzeMessage(message,callback) {
     });
   }
   else if(upperText.indexOf("HOURS") != -1) {
-      var foodObject = Food.findEatingPlace(message);
-      if(foodObject != null) {
-        var foodLocation = Food.findFoodBuilding(message,foodObject);
-        Food.formatRestaurant(foodObject["name"],foodLocation,true,function(formattedAnswer) {
-          callback(formattedAnswer);
-        });
-      } else {
-        callback("food place invalid")
-      }
+    var foodObject = Food.findEatingPlace(message);
+    if(foodObject != null) {
+      var foodLocation = Food.findFoodBuilding(message,foodObject);
+      Food.formatRestaurant(foodObject["name"],foodLocation,true,function(formattedAnswer) {
+        callback(formattedAnswer);
+      });
+    } else {
+      callback("food place invalid")
+    }
   } else if(upperText.indexOf("OPEN") != -1) {
     var foodObject = Food.findEatingPlace(message);
     if(foodObject != null) {
