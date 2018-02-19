@@ -26,13 +26,7 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.json({ verify: verifyRequestSignature }));
 app.use(express.static('public'));
 
-/*
- * Be sure to setup your config values before running this code. You can
- * set them using environment variables or modifying the config file in /config.
- *
- */
-
-// App Secret can be retrieved from the App Dashboard
+// App Secret from the App Dashboard
 const APP_SECRET = (process.env.MESSENGER_APP_SECRET) ?
   process.env.MESSENGER_APP_SECRET :
   config.get('appSecret');
@@ -42,13 +36,12 @@ const VALIDATION_TOKEN = (process.env.MESSENGER_VALIDATION_TOKEN) ?
   (process.env.MESSENGER_VALIDATION_TOKEN) :
   config.get('validationToken');
 
-// Generate a page access token for your page from the App Dashboard
+// page access token from App Dashboard
 const PAGE_ACCESS_TOKEN = (process.env.MESSENGER_PAGE_ACCESS_TOKEN) ?
   (process.env.MESSENGER_PAGE_ACCESS_TOKEN) :
   config.get('pageAccessToken');
 
-// URL where the app is running (include protocol). Used to point to scripts and
-// assets located at this address.
+// URL where the app is running 
 const SERVER_URL = (process.env.SERVER_URL) ?
   (process.env.SERVER_URL) :
   config.get('serverURL');
@@ -174,8 +167,7 @@ function verifyRequestSignature(req, res, buf) {
  * Authorization Event
  *
  * The value for 'optin.ref' is defined in the entry point. For the "Send to
- * Messenger" plugin, it is the 'data-ref' field. Read more at
- * https://developers.facebook.com/docs/messenger-platform/webhook-reference/authentication
+ * Messenger" plugin, it is the 'data-ref' field
  *
  */
 function receivedAuthentication(event) {
@@ -204,7 +196,6 @@ function receivedAuthentication(event) {
  *
  * This event is called when a message is sent to your page. The 'message'
  * object format can vary depending on the kind of message that was received.
- * Read more at https://developers.facebook.com/docs/messenger-platform/webhook-reference/message-received
  *
  */
 function receivedMessage(event) {
@@ -225,7 +216,7 @@ function receivedMessage(event) {
 
 /*
  * Delivery Confirmation Event
- * This event is sent to confirm the delivery of a message. Read more about
+ * This event is sent to confirm the delivery of a message
  */
 function receivedDeliveryConfirmation(event) {
   var senderID = event.sender.id;
@@ -250,7 +241,6 @@ function receivedDeliveryConfirmation(event) {
  * Postback Event
  *
  * This event is called when a postback is tapped on a Structured Message.
- * https://developers.facebook.com/docs/messenger-platform/webhook-reference/postback-received
  *
  */
 function receivedPostback(event) {
@@ -274,7 +264,6 @@ function receivedPostback(event) {
  * Message Read Event
  *
  * This event is called when a previously-sent message has been read.
- * https://developers.facebook.com/docs/messenger-platform/webhook-reference/message-read
  *
  */
 function receivedMessageRead(event) {
@@ -294,7 +283,6 @@ function receivedMessageRead(event) {
  *
  * This event is called when the Link Account or UnLink Account action has been
  * tapped.
- * https://developers.facebook.com/docs/messenger-platform/webhook-reference/account-linking
  *
  */
 function receivedAccountLink(event) {
